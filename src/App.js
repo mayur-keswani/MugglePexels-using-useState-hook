@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Products from './Components/Products/Products';
 import Header from './Components/UI/Header/Header';
 import Collection from './Components/Collections/Collection';
-import Navigation from './Components/UI/Navigation/Navigation'
+// import Navigation from './Components/UI/Navigation/Navigation'
 
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
@@ -111,7 +111,7 @@ function App() {
                     <>
                      
                       <Header setCriterion={(value)=>setCriterion(value)} toggleModal={toggleModal}/>
-                      <Navigation setCriterion={(value)=>setCriterion(value)}/>
+                      {/* <Navigation setCriterion={(value)=>setCriterion(value)}/> */}
                       <Products addInLocalStorage={(item)=>addInLocalStorage(item)} searchedProduct={criterion}/>
                       <ModalWrapper show={modalIsOpen} toggleModal={toggleModal}>
                         <Collection 

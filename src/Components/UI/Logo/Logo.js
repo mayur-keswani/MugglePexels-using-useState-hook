@@ -5,7 +5,7 @@ const Logo=(props)=> {
 	return(
 		<Fragment>
 			<img src={logo} 
-				className="rounded mx-2" 
+				className="rounded m-1" 
 				alt="MugglePexels" id="MugglePexels_Logo" 
 				height={props.height}></img>
 		</Fragment>
