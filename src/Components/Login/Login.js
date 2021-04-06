@@ -1,14 +1,51 @@
-import React, { Fragment , useState } from 'react'
-import { Link } from 'react-router-dom';
-
+import React, { Fragment , useContext, useState } from 'react'
+import Logo from '../UI/Logo/Logo';
+import UserContext from '../../Context/UserContext'
+import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom';
 import { Button, Modal, ModalBody, Container } from 'reactstrap';
 import { Row, Col , Form, FormGroup , Input, } from 'reactstrap';
-import Logo from '../UI/Logo/Logo';
 import './Login.css'
 
-const Login = () =>{
+import firebase from 'firebase/app'
+import { toast } from 'react-toastify';
+
+const Login = (props) =>{
 	const [modal, setModal] = useState(true);
-  	const toggle = () => setModal(!modal);
+	const [email,setEmail] = useState("");
+	const [password,setPassword]=useState("");
+
+	const context = useContext(UserContext);
+
+	const toggle = () => setModal(!modal);
+	const handleSignin=()=>{
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email,password)
+			.then(res=>{
+				const user={
+					email:res.user.email,
+					uid:res.user.uid
+				}
+				localStorage.setItem("user",JSON.stringify(user))
+				context.setUser(user);
+
+			})
+			.catch(err=>{
+				toast(err.message,{
+					type:"error"
+				})
+			})
+	}
+
+	const handleSubmit=(e)=>{
+		e.preventDefault();
+		handleSignin();
+		
+	}
+	if(context.user){
+		return <Redirect to="/"/>
+	}
 	return(
 	 <Fragment>
 	  <div className="text-white" style={{zIndex:"200",position:"absolute",top:"0",right:"0"}} >
@@ -29,7 +66,7 @@ const Login = () =>{
 
        		 <ModalBody>
 				<Col lg={12} sm={12}>
-				  <Form>
+				  <Form onSubmit={handleSubmit}>
 
 				  	<Row>
 						<Col sm={12} className="h3 text-weight-bolder text-center">Welcome back to MugglePexels</Col>
@@ -49,13 +86,20 @@ const Login = () =>{
 
       				<FormGroup row>
        			     	<Col sm={12}>
-          			   		<Input type="email" name="email" id="exampleEmail" placeholder="Email" />
+          			   		<Input type="email" name="email" id="exampleEmail" 
+								 placeholder="Email"
+								 value={email}
+								 onChange={(e)=>setEmail(e.target.value)} />
         			 	</Col>
      				</FormGroup>
       				<FormGroup row>
         			 	<Col sm={12}>
-          			   		<Input type="password" name="password" 
-								 id="examplePassword" placeholder="Password " />
+          			   		<Input type="password" 
+								 name="password" 
+								 id="examplePassword" 
+								 placeholder="Password"
+								 value={password}
+								 onChange={(e)=>setPassword(e.target.value)} />
         			 	</Col>
 					</FormGroup>
 					<FormGroup row>

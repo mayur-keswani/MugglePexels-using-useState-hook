@@ -1,9 +1,45 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import Logo from '../UI/Logo/Logo'
+import UserContext from '../../Context/UserContext'
 import { Container, Row , Col , Form , FormGroup , Input , Button } from 'reactstrap'
 import './Signup.css'
-import { Link } from 'react-router-dom'
-const Signup = () =>{
+import { Link, Redirect } from 'react-router-dom'
+
+import firebase from 'firebase/app'
+import { toast } from 'react-toastify'
+const Signup = (props) =>{
+	const [name,setName]=useState("")
+	const [email,setEmail]=useState("");
+	const [password,setPassword]=useState("")
+	const context=useContext(UserContext);
+
+	const handleSignup=()=>{
+		// e.preventDefault();
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(email,password)
+			.then(res=>{
+				// console.log(res.user.email)
+				const user={
+					email:res.user.email,
+					uid:res.user.uid
+				}
+				localStorage.setItem("user",JSON.stringify(user))
+				context.setUser(user)
+			})
+			.catch(err=>{
+				console.log(err)
+				toast(err.message,{type:"error"})
+			})
+	}
+   const handleSubmit=(e)=>{
+	   e.preventDefault()
+	   handleSignup();
+	//    <Redirect to="/"></Redirect>
+   }
+   if (context.user?.uid) {
+    return <Redirect to="/" />;
+  }
 	return(
 		<Fragment>
 			<Container fluid id="signup-section">
@@ -18,7 +54,7 @@ const Signup = () =>{
 			 <Row>
 				{/* // form section */}
 				<Col lg={6} sm={12}>
-				  <Form>
+				  <Form onSubmit={handleSubmit}>
 
 				  	<Row>
 						<Col sm={12} className="h1 text-weight-bolder text-center">Join with others</Col>
@@ -37,7 +73,11 @@ const Signup = () =>{
 				  	<Row form>
         				<Col md={6}>
           			 		<FormGroup>
-           			    		<Input type="text" name="firstname" id="firstname" placeholder="First Name" />
+           			    		<Input type="text" 
+								   name="firstname" id="firstname" 
+								   placeholder="First Name"
+								   value={name}
+								   onChange={(e)=>setName(e.target.value)} />
           			 		</FormGroup>
        			    	</Col>
         				<Col md={6}>
@@ -48,13 +88,21 @@ const Signup = () =>{
       				</Row>
       				<FormGroup row>
        			     	<Col sm={12}>
-          			   		<Input type="email" name="email" id="exampleEmail" placeholder="Email" />
+          			   		<Input type="email" 
+								 name="email" id="exampleEmail" 
+								 placeholder="Email"
+								 value={email}
+								 onChange={(e)=>setEmail(e.target.value)} />
         			 	</Col>
      				</FormGroup>
       				<FormGroup row>
         			 	<Col sm={12}>
-          			   		<Input type="password" name="password" 
-								 id="examplePassword" placeholder="Password " />
+          			   		<Input type="password" 
+								 name="password" 
+								 id="examplePassword" 
+								 placeholder="Password"
+								 value={password}
+								 onChange={(e)=>setPassword(e.target.value)} />
         			 	</Col>
 					</FormGroup>
 					<FormGroup row>

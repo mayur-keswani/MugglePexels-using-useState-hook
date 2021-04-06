@@ -1,4 +1,7 @@
-import React, { Fragment, useState } from 'react' 
+import React, { Fragment, useEffect, useState } from 'react' 
+
+
+
 // css/styling components
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
@@ -9,30 +12,33 @@ import 'react-toastify/dist/ReactToastify.css';
 import Products from './Components/Products/Products';
 import Header from './Components/UI/Header/Header';
 import Collection from './Components/Collections/Collection';
-// import Navigation from './Components/UI/Navigation/Navigation'
-
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
+import ModalWrapper from './Components/UI/ModalWrapper/ModalWrapper';
 // some dependencies
 import { v4 } from 'uuid';
 import UserContext from './Context/UserContext'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import ModalWrapper from './Components/UI/ModalWrapper/ModalWrapper';
-
-
-
+import firebaseConfig from './Config/firebaseConfig'
+firebase.initializeApp(firebaseConfig)
 
 
 function App() {
   // state hook
-  const [users,setUsers]=useState(null)
+  const [user,setUser]=useState(null)
   const [collections,setCollections]=useState({});                         
   const [ criterion , setCriterion]=useState("products");
   const [modalIsOpen, setModalOpen] = useState(false);
 
-
+  useEffect(()=>{
+    const localUser=localStorage.getItem("user")
+    if(typeof localUser !== typeof undefined){
+      setUser(JSON.parse(localUser))
+    }
+  },[])
 
   const toggleModal = () => setModalOpen(!modalIsOpen);
 
@@ -90,7 +96,7 @@ function App() {
 
       <BrowserRouter>
           <ToastContainer/>
-          <UserContext.Provider value={{user:users,setUser:setUsers}}>
+          <UserContext.Provider value={{user:user,setUser:setUser}}>
 
              
 

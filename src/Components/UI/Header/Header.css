@@ -32,7 +32,7 @@
 	box-sizing:border-box;
 }
 
-@media(max-width:499px){
+@media(max-width:599px){
 	#header{
 		margin: 0;
 		width: 100%;
@@ -40,5 +40,12 @@
 		box-sizing: border-box;
 		z-index: 250;
 	
+	}
+
+}
+
+@media(min-width:576px){
+	.collapse-navbar{
+		background-color: transparent  !important;
 	}
 }

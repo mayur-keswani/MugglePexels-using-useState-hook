@@ -13,7 +13,8 @@ import {
 	Nav,
 	NavItem,
 	NavLink,
-	Button
+	Button,
+	NavbarText
   } from 'reactstrap';
   
 const Navigation = () =>{
@@ -25,17 +26,29 @@ const Navigation = () =>{
 
 	return(
 		<Fragment>
-			<Navbar dark className="m-0 p-0" expand="md">
+			<Navbar dark className="m-0 p-0" expand="sm">
 			<div><Logo height="50px"/></div>
 			<NavbarBrand href="/" className="companyName font-weight-bold">MugglePexels</NavbarBrand>
 			<NavbarToggler onClick={toggle}  />
-			<Collapse isOpen={isOpen} navbar color="dark" style={{backgroundColor:isOpen?"#242B2E":"transparent"}}>
+
+			<Collapse 
+				isOpen={isOpen} 
+				className="collapse-navbar" navbar  
+				style={{backgroundColor:(isOpen && window.innerWidth<576) ?"#242B2E":"transparent"}}>
+			<NavbarText>{context.user?`Hello ${context.user.email}`:"Hello Muggle !!"}</NavbarText>
 				<Nav className="ml-auto p-3 auto text-white" navbar>
 					{
-						context.users?
+						context.user?
 							(<NavItem >
-             		  			<NavLink tag={Link} to="/" className="text-white">
-							   		{isOpen?"Logout":<Button color="info" size="lg">Logout</Button>}
+             		  			<NavLink tag={Link} to="/" className="text-white"
+								   onClick={()=>{
+										   localStorage.removeItem("user");
+										   context.setUser(null)
+									   }}>
+							   		{isOpen?"Logout":
+									   <Button color="info" size="lg">
+									   	Logout
+									   </Button>}
 								</NavLink>
             				</NavItem>):
 							(<NavItem >
@@ -44,9 +57,7 @@ const Navigation = () =>{
 								</NavLink>
            					</NavItem>)
 
-					}
-            			
-           				
+					}		
          		</Nav>
 			</Collapse>
 			</Navbar>
