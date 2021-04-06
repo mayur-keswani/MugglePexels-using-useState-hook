@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import { Modal, ModalBody } from 'reactstrap';
+import { Modal,ModalHeader , ModalBody } from 'reactstrap';
+import {FaWindowClose} from 'react-icons/fa'
 
 
 const ModalWrapper = (props) =>{
@@ -15,6 +16,7 @@ const ModalWrapper = (props) =>{
 					trapFocus={true}
 					zIndex="250"
 					onClosed={()=>props.closeImgDetails(false)}>
+				<ModalHeader className="p-2" toggle={props.toggleModal}></ModalHeader>
 				<ModalBody className="d-flex p-1 justify-content-center align-items-center flex-column">
 					{props.children}
 				</ModalBody>			
