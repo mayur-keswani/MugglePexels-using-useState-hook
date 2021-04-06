@@ -12,8 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Products from './Components/Products/Products';
 import Header from './Components/UI/Header/Header';
 import Collection from './Components/Collections/Collection';
-import Signup from './Components/Signup/Signup';
-import Login from './Components/Login/Login';
+import Signup from './Pages/Signup/Signup';
+import Login from './Pages/Login/Login';
 import ModalWrapper from './Components/UI/ModalWrapper/ModalWrapper';
 // some dependencies
 import { v4 } from 'uuid';
@@ -23,6 +23,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import firebaseConfig from './Config/firebaseConfig'
+import ImageDetail from './Components/Image_Details/ImageDetail';
 firebase.initializeApp(firebaseConfig)
 
 
@@ -32,7 +33,7 @@ function App() {
   const [collections,setCollections]=useState({});                         
   const [ criterion , setCriterion]=useState("products");
   const [modalIsOpen, setModalOpen] = useState(false);
-
+  const [showImageDetail,setShowFullImage]=useState(false)
   useEffect(()=>{
     const localUser=localStorage.getItem("user")
     if(typeof localUser !== typeof undefined){
@@ -46,10 +47,8 @@ function App() {
     // fetching items from localStorage
     const item=JSON.parse(localStorage.getItem("item"))
     localStorage.removeItem("item")
-
     //generating unique id from new-collection object
     let  newId=v4().toString();
-
     // Storing item into object
     let object;
     if(item){
@@ -57,13 +56,12 @@ function App() {
     }else{
        object={ name:"",items:[]}
     }
-
     // Creating copy of prev. collections
     let collections_Copy=collections
-
     collections_Copy[newId]=object    
     setCollections({...collections_Copy}) 
   }
+
 
 
   const addInCollection=(id)=>{
@@ -83,10 +81,16 @@ function App() {
   }
 
 
-  const addInLocalStorage=(item)=>{
+  const addInLocalStorage=(item,action)=>{
     // adding item into localStorage for temporary
     localStorage.setItem("item",JSON.stringify(item))
-    setModalOpen(true)
+      setModalOpen(true)
+    if(action==="show-image-detail"){
+      // console("Show full image ")
+      setShowFullImage(true)
+
+    }
+
     // setCollectionVisible(true);
   }
 
@@ -118,13 +122,23 @@ function App() {
                      
                       <Header setCriterion={(value)=>setCriterion(value)} toggleModal={toggleModal}/>
                       {/* <Navigation setCriterion={(value)=>setCriterion(value)}/> */}
-                      <Products addInLocalStorage={(item)=>addInLocalStorage(item)} searchedProduct={criterion}/>
-                      <ModalWrapper show={modalIsOpen} toggleModal={toggleModal}>
-                        <Collection 
-                          collectionList={collections}
-                          createCollection={createCollection}
-                          addInCollection={(id)=>addInCollection(id)}/>
+                      <Products 
+                        addInLocalStorage={(item,action)=>addInLocalStorage(item,action)} 
+                        searchedProduct={criterion}/>
+
+                      <ModalWrapper show={modalIsOpen} toggleModal={toggleModal} 
+                        closeImgDetails={()=>setShowFullImage(false)}>
+                        {
+                          showImageDetail?
+                           <ImageDetail/>:
+                           <Collection 
+                              collectionList={collections}
+                              createCollection={createCollection}
+                              addInCollection={(id)=>addInCollection(id)}/>
+                        }
+                        
                       </ModalWrapper>
+
                     </>
                   }>  
                   </Route>

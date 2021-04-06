@@ -16,7 +16,7 @@ const Products = ({addInLocalStorage,searchedProduct}) => {
 			cancelToken.cancel("Cancel previous token")
 		}
 		cancelToken=axios.CancelToken.source();
-		const {data}=await axios.get(`https://api.unsplash.com/photos/random?count=2&query=${searchedProduct}`,{
+		const {data}=await axios.get(`https://api.unsplash.com/photos/random?count=5&query=${searchedProduct}`,{
 								cancelToken:cancelToken.token,
 								headers:{
 									Authorization: 	`Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEY}`
@@ -24,13 +24,14 @@ const Products = ({addInLocalStorage,searchedProduct}) => {
 							})
 		// const {photos}=data;
 		const results=data;
-		// console.log(results)
+		console.log(results)
 		const updatedPhotos=results.map(photo=> {
 			return{
 					id:v4(),
 					small_image:photo.urls.small,
 					medium_image:photo.urls.small,
 					picture_description:photo.alt_description,
+					artist:photo.user.first_name + " " + photo.user.last_name
 				}
 		})
 		setProducts(updatedPhotos);
@@ -44,7 +45,10 @@ const Products = ({addInLocalStorage,searchedProduct}) => {
 
 	
 	let content = products.map(product=>
-				<Product key={product.id} productDetail={product} addInLocalStorage={(prod)=>addInLocalStorage(prod)}/>
+				<Product 
+					key={product.id} 
+					productDetail={product} 
+					addInLocalStorage={(item,action)=>addInLocalStorage(item,action)}/>
 			)
 	return(
 		<Fragment>

@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react'
-import Logo from '../UI/Logo/Logo'
+import Logo from '../../Components/UI/Logo/Logo'
 import UserContext from '../../Context/UserContext'
 import { Container, Row , Col , Form , FormGroup , Input , Button } from 'reactstrap'
 import './Signup.css'

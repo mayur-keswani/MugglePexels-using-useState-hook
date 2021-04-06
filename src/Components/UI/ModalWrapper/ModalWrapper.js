@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Modal, ModalBody } from 'reactstrap';
-//import './ModalWrapper.css'
+
 
 const ModalWrapper = (props) =>{
 	return(
@@ -13,8 +13,9 @@ const ModalWrapper = (props) =>{
 					backdropTransition={{ timeout: 700 }}
         			toggle={props.toggleModal}
 					trapFocus={true}
-					zIndex="250" className="modal-wrapper">
-				<ModalBody>
+					zIndex="250"
+					onClosed={()=>props.closeImgDetails(false)}>
+				<ModalBody className="d-flex justify-content-center">
 					{props.children}
 				</ModalBody>			
 			</Modal>

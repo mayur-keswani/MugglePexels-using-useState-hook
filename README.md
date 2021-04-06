@@ -32,6 +32,8 @@ do git clone of the repository https://github.com/mayur-keswani/MugglePexels.git
 
 [NOTE: This images are retrived from unsplash-API. ]
 
+ - Get brief-description about each image just by clicking on it.
+ 
  - Pick the image and store them into your collection
 	for later use
  

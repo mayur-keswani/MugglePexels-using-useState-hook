@@ -1,5 +1,5 @@
 import React, { Fragment , useContext, useState } from 'react'
-import Logo from '../UI/Logo/Logo';
+import Logo from '../../Components/UI/Logo/Logo';
 import UserContext from '../../Context/UserContext'
 import axios from 'axios'
 import { Link, Redirect } from 'react-router-dom';
