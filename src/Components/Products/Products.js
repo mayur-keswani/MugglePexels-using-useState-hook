@@ -16,7 +16,7 @@ const Products = ({addInLocalStorage,searchedProduct}) => {
 			cancelToken.cancel("Cancel previous token")
 		}
 		cancelToken=axios.CancelToken.source();
-		const {data}=await axios.get(`https://api.unsplash.com/photos/random?count=5&query=${searchedProduct}`,{
+		const {data}=await axios.get(`https://api.unsplash.com/photos/random?count=1&query=${searchedProduct}`,{
 								cancelToken:cancelToken.token,
 								headers:{
 									Authorization: 	`Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEY}`

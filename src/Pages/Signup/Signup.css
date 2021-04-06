@@ -1,6 +1,5 @@
 #signup-section{
-	margin-left: 10px;
-	margin-right: 10px;
+	margin:auto;
 	box-sizing: border-box;
 }
 .prod-title {
@@ -9,7 +8,7 @@
  display: flex;
  flex-direction: row;
  align-items: center;
- justify-content: center;
+ justify-content: start;
  box-sizing: border-box;
  /* border: 2px solid red; */
 }
@@ -21,7 +20,8 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 90vh ;
-	overflow: scroll;
+	overflow-x: scroll !important;
+	white-space: nowrap;
 	box-sizing: border-box;
-
+	
 }

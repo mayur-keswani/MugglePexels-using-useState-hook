@@ -15,7 +15,7 @@ const ModalWrapper = (props) =>{
 					trapFocus={true}
 					zIndex="250"
 					onClosed={()=>props.closeImgDetails(false)}>
-				<ModalBody className="d-flex justify-content-center">
+				<ModalBody className="d-flex p-1 justify-content-center align-items-center flex-column">
 					{props.children}
 				</ModalBody>			
 			</Modal>

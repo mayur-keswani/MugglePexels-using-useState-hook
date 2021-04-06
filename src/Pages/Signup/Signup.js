@@ -32,6 +32,7 @@ const Signup = (props) =>{
 				toast(err.message,{type:"error"})
 			})
 	}
+
    const handleSubmit=(e)=>{
 	   e.preventDefault()
 	   handleSignup();
@@ -44,8 +45,8 @@ const Signup = (props) =>{
 		<Fragment>
 			<Container fluid id="signup-section">
 			  <Row>
-				  <Col lg={12} md={12} sm={12} className="prod-title  text-center">
-					 <Logo height="80%"/> MugglePexels
+				  <Col lg={12} md={12} sm={12} className="prod-title">
+					 <Logo height="80%"/> 
 					 <span className="text-dark" style={{zIndex:"200",position:"absolute",top:"2",right:"30px"}}>
 	  					Have a Account? <Link to="/signin"><Button size="md" className="text-dark" style={{backgroundColor:"#f1f1f1"}}>Sign In</Button></Link>
 	  				</span>

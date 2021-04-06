@@ -34,6 +34,7 @@ do git clone of the repository https://github.com/mayur-keswani/MugglePexels.git
 
  - Get brief-description about each image just by clicking on it.
  
+ - Download Image-Offline
  - Pick the image and store them into your collection
 	for later use
  

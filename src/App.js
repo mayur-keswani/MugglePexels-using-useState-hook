@@ -15,6 +15,7 @@ import Collection from './Components/Collections/Collection';
 import Signup from './Pages/Signup/Signup';
 import Login from './Pages/Login/Login';
 import ModalWrapper from './Components/UI/ModalWrapper/ModalWrapper';
+import ImageDetail from './Components/Image_Details/ImageDetail';
 // some dependencies
 import { v4 } from 'uuid';
 import UserContext from './Context/UserContext'
@@ -23,7 +24,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import firebaseConfig from './Config/firebaseConfig'
-import ImageDetail from './Components/Image_Details/ImageDetail';
 firebase.initializeApp(firebaseConfig)
 
 

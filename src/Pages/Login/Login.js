@@ -1,7 +1,6 @@
 import React, { Fragment , useContext, useState } from 'react'
 import Logo from '../../Components/UI/Logo/Logo';
 import UserContext from '../../Context/UserContext'
-import axios from 'axios'
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Modal, ModalBody, Container } from 'reactstrap';
 import { Row, Col , Form, FormGroup , Input, } from 'reactstrap';
@@ -55,7 +54,7 @@ const Login = (props) =>{
 		  </Link>
 	  </div>
 	  <Container id="login-section" style={{zIndex:"50"}}>
-		<div toggle={toggle}><Logo height="100px"/></div>
+		<div toggle={toggle}><Logo height="50px"/></div>
      	<Modal  isOpen={modal} 
 		 			centered={true}
 			  		modalTransition={{ timeout: 500 }} 
