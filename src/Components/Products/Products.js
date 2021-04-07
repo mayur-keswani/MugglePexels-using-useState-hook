@@ -8,7 +8,6 @@ import Product from '../Product/Product'
 const Products = ({addInLocalStorage,searchedProduct}) => {
 
 	const [products,setProducts]=useState([]);
-    const [cancelToken,setCancelToken]=useState()
 	
 	const fetchProducts=async(CancelToken)=>{
 			
