@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Modal,ModalHeader , ModalBody } from 'reactstrap';
-import {FaWindowClose} from 'react-icons/fa'
+
 
 
 const ModalWrapper = (props) =>{

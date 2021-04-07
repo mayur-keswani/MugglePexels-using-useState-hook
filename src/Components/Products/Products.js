@@ -8,23 +8,19 @@ import Product from '../Product/Product'
 const Products = ({addInLocalStorage,searchedProduct}) => {
 
 	const [products,setProducts]=useState([]);
-
-	let cancelToken;
-	const fetchProducts=async()=>{
-
-		if(typeof cancelToken !== typeof undefined){
-			cancelToken.cancel("Cancel previous token")
-		}
-		cancelToken=axios.CancelToken.source();
+    const [cancelToken,setCancelToken]=useState()
+	
+	const fetchProducts=async(CancelToken)=>{
+			
 		const {data}=await axios.get(`https://api.unsplash.com/photos/random?count=20&query=${searchedProduct}`,{
-								cancelToken:cancelToken.token,
+								cancelToken:CancelToken.token,
 								headers:{
 									Authorization: 	`Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEY}`
 								}
 							})
-		// const {photos}=data;
+
 		const results=data;
-		console.log(results)
+		
 		const updatedPhotos=results.map(photo=> {
 			return{
 					id:v4(),
@@ -38,9 +34,11 @@ const Products = ({addInLocalStorage,searchedProduct}) => {
 	};
 
 	useEffect(() => {
-
-		fetchProducts();
-	
+		let CancelToken=axios.CancelToken.source();
+		fetchProducts(CancelToken);
+		return () => {
+			CancelToken.cancel(`Previous Request Cancelled${searchedProduct}]`) // <-- 3rd step
+		  }
 	},[searchedProduct])
 
 	

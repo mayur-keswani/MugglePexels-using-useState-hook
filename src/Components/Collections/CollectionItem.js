@@ -19,6 +19,8 @@ const CollectionItem = ({collection_items,addInCollection}) =>{
 								 height="300px"/>
 						
 					)
+				else	
+					return null
 			}))
 	}else{
 		content=(<h2>No items in this collection</h2>)
